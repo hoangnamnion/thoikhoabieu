@@ -1,4 +1,4 @@
-name: Build iOS IPA
+name: Build iOS IPA & Android APK
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-ipa:
-    name: Build & Package .IPA File
+  build-apps:
+    name: Build & Package .IPA & .APK Files
     runs-on: macos-14
 
     steps:
@@ -29,15 +29,19 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Install Dependencies & Scaffold iOS Runner
+      - name: Install Dependencies & Scaffold iOS/Android Runners
         run: |
-          flutter create --platforms=ios --org com.thoikhoabieu .
+          flutter create --platforms=ios,android --org com.thoikhoabieu .
           flutter pub get
 
       - name: Run Automated Tests
         run: |
           rm -f test/widget_test.dart
           flutter test
+
+      - name: Build Android APK
+        run: |
+          flutter build apk --release
 
       - name: Build iOS App Bundle
         run: |
@@ -51,9 +55,16 @@ jobs:
           zip -r -9 ThoiKhoaBieu.ipa Payload
           echo "Build IPA thanh cong!"
 
-      - name: Upload IPA Artifact
+      - name: Upload IPA Artifact (iOS)
         uses: actions/upload-artifact@v4
         with:
           name: ThoiKhoaBieu-iOS-IPA
           path: build/ios/ipa/ThoiKhoaBieu.ipa
+          retention-days: 14
+
+      - name: Upload APK Artifact (Android)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ThoiKhoaBieu-Android-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 14
