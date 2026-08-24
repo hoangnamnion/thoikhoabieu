@@ -184,6 +184,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     : Colors.black.withOpacity(0.06),
               ),
             ),
+            child: Column(
               children: [
                 SwitchListTile.adaptive(
                   activeColor: const Color(0xFF4F46E5),
