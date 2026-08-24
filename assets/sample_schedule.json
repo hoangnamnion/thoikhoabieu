@@ -1,0 +1,84 @@
+{
+  "semester": "Học kỳ 1 (2026 - 2027)",
+  "student_name": "Sinh viên",
+  "updated_at": "2026-08-24T08:00:00Z",
+  "schedule": [
+    {
+      "id": "mon_01",
+      "day_of_week": 2,
+      "subject_name": "Lập trình Ứng dụng Di động iOS",
+      "room": "Phòng Lab A3-201",
+      "teacher": "TS. Nguyễn Văn An",
+      "start_time": "07:30",
+      "end_time": "09:50",
+      "color": "#4F46E5",
+      "notes": "Mang theo laptop và chuẩn bị bài thuyết trình nhóm"
+    },
+    {
+      "id": "mon_02",
+      "day_of_week": 2,
+      "subject_name": "Cơ sở dữ liệu nâng cao",
+      "room": "Phòng B1-402",
+      "teacher": "ThS. Trần Thị Mai",
+      "start_time": "13:30",
+      "end_time": "15:50",
+      "color": "#0EA5E9",
+      "notes": "Thực hành truy vấn SQL và tối ưu Index"
+    },
+    {
+      "id": "tue_01",
+      "day_of_week": 3,
+      "subject_name": "Kiến trúc Phần mềm",
+      "room": "Hội trường C",
+      "teacher": "PGS.TS. Lê Hoàng Nam",
+      "start_time": "08:00",
+      "end_time": "11:15",
+      "color": "#8B5CF6",
+      "notes": "Đọc trước chương Clean Architecture & Microservices"
+    },
+    {
+      "id": "wed_01",
+      "day_of_week": 4,
+      "subject_name": "Trí tuệ nhân tạo (AI & Machine Learning)",
+      "room": "Phòng Lab AI-105",
+      "teacher": "TS. Phạm Đức Minh",
+      "start_time": "07:30",
+      "end_time": "10:40",
+      "color": "#EC4899",
+      "notes": "Nộp bài tập mô hình Deep Learning"
+    },
+    {
+      "id": "thu_01",
+      "day_of_week": 5,
+      "subject_name": "An toàn và Bảo mật thông tin",
+      "room": "Phòng B2-301",
+      "teacher": "ThS. Đỗ Quang Huy",
+      "start_time": "13:00",
+      "end_time": "16:15",
+      "color": "#F59E0B",
+      "notes": "Thực hành kiểm thử thâm nhập (Penetration Testing)"
+    },
+    {
+      "id": "fri_01",
+      "day_of_week": 6,
+      "subject_name": "Điện toán đám mây & DevOps",
+      "room": "Phòng Lab C-204",
+      "teacher": "Kỹ sư Vũ Minh Trí",
+      "start_time": "08:00",
+      "end_time": "11:15",
+      "color": "#10B981",
+      "notes": "Cấu hình CI/CD Pipeline với GitHub Actions & Docker"
+    },
+    {
+      "id": "sat_01",
+      "day_of_week": 7,
+      "subject_name": "Tiếng Anh chuyên ngành CNTT",
+      "room": "Phòng A1-102",
+      "teacher": "Ms. Sarah Jenkins",
+      "start_time": "09:00",
+      "end_time": "11:30",
+      "color": "#06B6D4",
+      "notes": "Luyện kỹ năng phỏng vấn kỹ thuật tiếng Anh"
+    }
+  ]
+}
