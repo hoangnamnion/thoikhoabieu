@@ -5,6 +5,8 @@ import 'providers/schedule_provider.dart';
 import 'theme/doraemon_theme.dart';
 import 'views/home_screen.dart';
 
+import 'services/notification_service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -14,6 +16,13 @@ void main() async {
       statusBarIconBrightness: Brightness.dark,
     ),
   );
+
+  // Khởi tạo dịch vụ thông báo
+  try {
+    await NotificationService().initialize();
+  } catch (e) {
+    debugPrint('Lỗi khởi tạo thông báo: $e');
+  }
 
   runApp(
     MultiProvider(

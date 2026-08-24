@@ -36,6 +36,11 @@ class NotificationService {
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
+      defaultPresentAlert: true,
+      defaultPresentSound: true,
+      defaultPresentBadge: true,
+      defaultPresentBanner: true,
+      defaultPresentList: true,
     );
 
     const InitializationSettings initSettings = InitializationSettings(
@@ -47,7 +52,7 @@ class NotificationService {
     _isInitialized = true;
   }
 
-  /// Yêu cầu quyền gửi thông báo trên iOS
+  /// Yêu cầu quyền gửi thông báo trên iOS và Android
   Future<bool> requestPermissions() async {
     final iosImplementation = _notificationsPlugin
         .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>();
@@ -59,6 +64,14 @@ class NotificationService {
       );
       return granted ?? false;
     }
+
+    final androidImplementation = _notificationsPlugin
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+    if (androidImplementation != null) {
+      final granted = await androidImplementation.requestNotificationsPermission();
+      return granted ?? true;
+    }
+
     return true;
   }
 
@@ -125,6 +138,8 @@ class NotificationService {
           presentAlert: true,
           presentBadge: true,
           presentSound: true,
+          presentBanner: true,
+          presentList: true,
         ),
       );
 
@@ -167,6 +182,8 @@ class NotificationService {
           presentAlert: true,
           presentBadge: true,
           presentSound: true,
+          presentBanner: true,
+          presentList: true,
         ),
       );
 
