@@ -8,9 +8,9 @@ class CacheService {
   static const String _keyNotificationsEnabled = 'notifications_enabled';
   static const String _keyLastUpdated = 'last_cache_updated_time';
 
-  // URL mẫu mặc định (có thể trỏ tới MockAPI, Supabase, Cloudflare Worker hoặc JSON Bin)
+  // URL Cloud API mặc định của bạn trên GitHub
   static const String defaultCloudUrl =
-      'https://raw.githubusercontent.com/minh-developer/sample-api/main/timetable.json';
+      'https://raw.githubusercontent.com/hoangnamnion/thoikhoabieu/main/assets/sample_schedule.json';
 
   Future<void> saveSchedule(TimetableData data) async {
     final prefs = await SharedPreferences.getInstance();
