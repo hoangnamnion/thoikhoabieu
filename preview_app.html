@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Thời Khóa Biểu Tuần iOS - UTT</title>
+  <title>Thời Khóa Biểu Doraemon Anime iOS - UTT</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,33 +11,32 @@
 
   <style>
     :root {
-      --primary: #4F46E5;
-      --primary-light: #EEF2FF;
-      --primary-gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
-      --bg-light: #F8FAFC;
+      --doraemon-blue: #00A0E9;
+      --doraemon-blue-dark: #0284C7;
+      --doraemon-sky: #E0F2FE;
+      --doraemon-gradient: linear-gradient(135deg, #00A0E9 0%, #38BDF8 100%);
+      --bell-yellow: #FFD800;
+      --collar-red: #E60012;
+      --bg-light: #F0F9FF;
       --card-light: #FFFFFF;
       --text-main: #0F172A;
       --text-sub: #64748B;
-      --border-light: rgba(226, 232, 240, 0.9);
+      --border-light: rgba(2, 132, 199, 0.12);
       --success: #10B981;
       --warning: #F59E0B;
       --danger: #EF4444;
-      --blue: #3B82F6;
-      --radius-lg: 24px;
-      --radius-md: 18px;
-      --radius-sm: 10px;
-      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 12px 25px -5px rgba(79, 70, 229, 0.12);
+      --shadow-sm: 0 4px 10px -1px rgba(0, 160, 233, 0.08);
+      --shadow-md: 0 14px 28px -5px rgba(0, 160, 233, 0.18);
     }
 
     [data-theme="dark"] {
-      --bg-light: #090D16;
-      --card-light: #131B2E;
+      --bg-light: #0B132B;
+      --card-light: #1C2541;
       --text-main: #F8FAFC;
       --text-sub: #94A3B8;
-      --border-light: rgba(255, 255, 255, 0.08);
-      --primary-light: rgba(79, 70, 229, 0.15);
-      --shadow-md: 0 12px 25px -5px rgba(0, 0, 0, 0.45);
+      --border-light: rgba(56, 189, 248, 0.15);
+      --doraemon-sky: rgba(0, 160, 233, 0.18);
+      --shadow-md: 0 14px 28px -5px rgba(0, 0, 0, 0.5);
     }
 
     * {
@@ -49,7 +48,7 @@
     }
 
     body {
-      background: radial-gradient(circle at top right, #1E1B4B 0%, #0F172A 100%);
+      background: radial-gradient(circle at top right, #0369A1 0%, #0F172A 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -68,15 +67,19 @@
     .preview-header h1 {
       font-size: 26px;
       font-weight: 800;
-      background: linear-gradient(135deg, #FFFFFF 0%, #C7D2FE 100%);
+      background: linear-gradient(135deg, #FFFFFF 0%, #BAE6FD 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
 
     .preview-header p {
       font-size: 13.5px;
-      color: #94A3B8;
+      color: #BAE6FD;
     }
 
     .theme-toggle-bar {
@@ -86,9 +89,9 @@
     }
 
     .btn-toggle-view {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       color: #fff;
       padding: 8px 16px;
       border-radius: 30px;
@@ -102,7 +105,7 @@
     }
 
     .btn-toggle-view:hover {
-      background: rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.25);
       transform: translateY(-2px);
     }
 
@@ -113,12 +116,12 @@
       height: 852px;
       background: var(--bg-light);
       border-radius: 54px;
-      box-shadow: 0 0 0 12px #262B3B, 0 30px 70px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 0 12px #1E293B, 0 30px 70px rgba(0, 0, 0, 0.6);
       overflow: hidden;
       display: flex;
       flex-direction: column;
       position: relative;
-      border: 4px solid #1E2333;
+      border: 4px solid #0F172A;
       transition: background 0.3s ease;
     }
 
@@ -184,21 +187,6 @@
       transition: background 0.3s ease;
     }
 
-    .student-avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: var(--primary-gradient);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-weight: 800;
-      font-size: 14px;
-      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
-      flex-shrink: 0;
-    }
-
     .app-title-group {
       margin-left: 10px;
       flex: 1;
@@ -209,6 +197,9 @@
       font-weight: 800;
       color: var(--text-main);
       letter-spacing: -0.2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .student-badge {
@@ -216,8 +207,8 @@
       align-items: center;
       gap: 5px;
       font-size: 12px;
-      font-weight: 600;
-      color: var(--text-sub);
+      font-weight: 700;
+      color: var(--doraemon-blue-dark);
       margin-top: 1px;
     }
 
@@ -237,10 +228,10 @@
     .icon-btn {
       width: 36px;
       height: 36px;
-      border-radius: 11px;
+      border-radius: 12px;
       border: 1px solid var(--border-light);
-      background: var(--bg-light);
-      color: var(--text-main);
+      background: var(--doraemon-sky);
+      color: var(--doraemon-blue-dark);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -275,7 +266,7 @@
       flex: 1;
       min-width: 44px;
       padding: 8px 4px;
-      border-radius: 16px;
+      border-radius: 18px;
       background: var(--bg-light);
       border: 1px solid var(--border-light);
       display: flex;
@@ -300,8 +291,8 @@
     }
 
     .day-pill .day-dot {
-      width: 5px;
-      height: 5px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--success);
     }
@@ -311,9 +302,9 @@
     }
 
     .day-pill.active {
-      background: var(--primary-gradient);
+      background: var(--doraemon-gradient);
       border-color: transparent;
-      box-shadow: 0 6px 14px rgba(79, 70, 229, 0.35);
+      box-shadow: 0 6px 14px rgba(0, 160, 233, 0.4);
       transform: translateY(-2px);
     }
 
@@ -323,7 +314,8 @@
     }
 
     .day-pill.active .day-dot {
-      background: #FFFFFF;
+      background: var(--bell-yellow);
+      box-shadow: 0 0 6px rgba(255, 216, 0, 0.8);
     }
 
     /* Main Scroll Content */
@@ -361,16 +353,17 @@
       font-size: 10.5px;
       font-weight: 700;
       color: #fff;
-      background: var(--primary);
-      padding: 2px 7px;
-      border-radius: 6px;
+      background: var(--doraemon-gradient);
+      padding: 3px 8px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 160, 233, 0.3);
     }
 
     .count-tag {
       font-size: 12px;
       font-weight: 700;
-      color: var(--primary);
-      background: var(--primary-light);
+      color: var(--doraemon-blue-dark);
+      background: var(--doraemon-sky);
       padding: 4px 10px;
       border-radius: 12px;
     }
@@ -378,7 +371,7 @@
     /* Schedule Card */
     .schedule-card {
       background: var(--card-light);
-      border-radius: 20px;
+      border-radius: 22px;
       border: 1px solid var(--border-light);
       margin-bottom: 12px;
       box-shadow: var(--shadow-sm);
@@ -436,8 +429,8 @@
     }
 
     .status-upcoming {
-      background: rgba(59, 130, 246, 0.14);
-      color: #3B82F6;
+      background: rgba(0, 160, 233, 0.14);
+      color: #0284C7;
     }
 
     .status-finished {
@@ -473,13 +466,13 @@
     .meta-icon-box {
       width: 24px;
       height: 24px;
-      border-radius: 7px;
-      background: var(--bg-light);
+      border-radius: 8px;
+      background: var(--doraemon-sky);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 11px;
-      color: var(--text-main);
+      color: var(--doraemon-blue-dark);
     }
 
     .notes-box {
@@ -495,30 +488,28 @@
       margin-top: 4px;
     }
 
-    /* Rest Day Empty State */
+    /* Rest Day Dorayaki Empty State */
     .empty-state {
       text-align: center;
       padding: 60px 20px;
     }
 
     .empty-icon-circle {
-      width: 76px;
-      height: 76px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
-      background: var(--card-light);
-      border: 1px solid var(--border-light);
+      background: #FEF3C7;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 16px;
-      font-size: 32px;
-      color: var(--text-sub);
-      opacity: 0.7;
+      font-size: 48px;
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.15);
     }
 
     .empty-title {
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 17px;
+      font-weight: 800;
       color: var(--text-main);
       margin-bottom: 6px;
     }
@@ -681,18 +672,19 @@
       padding: 13px;
       border-radius: 14px;
       border: none;
-      background: var(--primary-gradient);
+      background: var(--doraemon-gradient);
       color: #fff;
       font-weight: 800;
       font-size: 14px;
       cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 160, 233, 0.3);
     }
   </style>
 </head>
 <body>
 
   <div class="preview-header">
-    <h1>📱 Ứng Dụng Thời Khóa Biểu Tuần iOS</h1>
+    <h1>🐱 Thời Khóa Biểu Doraemon Anime 🔔</h1>
     <p>Sinh viên: <b>Cao Văn Nam (75DCKN24)</b> - UTT</p>
   </div>
 
@@ -726,9 +718,9 @@
 
     <!-- App Header -->
     <div class="app-header">
-      <img src="logoapp.png?v=2" alt="App Logo" style="width:38px; height:38px; border-radius:10px; object-fit:cover; box-shadow:0 3px 10px rgba(0, 0, 0, 0.15); flex-shrink:0;">
+      <img src="logoapp.png?v=3" alt="App Logo" style="width:38px; height:38px; border-radius:11px; object-fit:cover; box-shadow:0 3px 10px rgba(0, 160, 233, 0.25); flex-shrink:0;">
       <div class="app-title-group">
-        <h2>Học kỳ 1 - UTT</h2>
+        <h2>Học kỳ 1 - UTT 🔔</h2>
         <div class="student-badge">
           <div class="status-dot"></div>
           <span>Cao Văn Nam (75DCKN24)</span>
@@ -802,7 +794,7 @@
       <!-- Weekly Matrix Grid View -->
       <div class="matrix-grid-view" id="matrixGridView">
         <div class="section-header">
-          <h3>Bảng Lưới Cả Tuần</h3>
+          <h3>Bảng Lưới Cả Tuần 🎒</h3>
           <span class="count-tag">7 môn / tuần</span>
         </div>
         <div id="matrixGridList">
@@ -830,10 +822,10 @@
             <label style="margin:0; font-size:13px; font-weight:700">Thông báo trước 30 phút</label>
             <span style="font-size:11px; color:var(--text-sub)">Tự động nhắc trước khi vào tiết</span>
           </div>
-          <input type="checkbox" checked style="width:20px; height:20px; accent-color:var(--primary)">
+          <input type="checkbox" checked style="width:20px; height:20px; accent-color:var(--doraemon-blue)">
         </div>
         <div style="margin-bottom: 14px;">
-          <button class="btn-toggle-view" onclick="testNotificationWeb()" style="width:100%; justify-content:center; background:rgba(79, 70, 229, 0.12); color:var(--primary); border-color:var(--primary)">
+          <button class="btn-toggle-view" onclick="testNotificationWeb()" style="width:100%; justify-content:center; background:var(--doraemon-sky); color:var(--doraemon-blue-dark); border-color:var(--doraemon-blue)">
             <i class="fas fa-bell"></i> 🔔 Gửi thử thông báo ngay
           </button>
         </div>
@@ -845,14 +837,14 @@
 
     <!-- iOS Banner Notification Popup -->
     <div id="iosBannerNotif" style="position:absolute; top:-100px; left:16px; right:16px; background:rgba(30, 41, 59, 0.96); backdrop-filter:blur(20px); color:#fff; padding:14px 16px; border-radius:22px; box-shadow:0 15px 35px rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.15); z-index:10000; transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display:flex; align-items:center; gap:12px;">
-      <img src="logoapp.png" alt="Logo" style="width:40px; height:40px; border-radius:11px; object-fit:cover; flex-shrink:0;">
+      <img src="logoapp.png?v=3" alt="Logo" style="width:40px; height:40px; border-radius:11px; object-fit:cover; flex-shrink:0;">
       <div style="flex:1;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <b style="font-size:13px; color:#F8FAFC;">THỜI KHÓA BIỂU</b>
+          <b style="font-size:13px; color:#F8FAFC;">THỜI KHÓA BIỂU DORAEMON</b>
           <span style="font-size:10px; color:#94A3B8;">Vừa xong</span>
         </div>
         <div style="font-size:12px; color:#E2E8F0; margin-top:2px; font-weight:500;">
-          ⏰ <b>[Test]</b> Nhắc nhở: Sắp có tiết <b>Kiến trúc cảnh quan</b> (12:45 tại A2.102)
+          ⏰ <b>[Test]</b> Nhắc nhở: Sắp có tiết <b>Kiến trúc cảnh quan</b> (12:45 tại A2.102) 🐱🔔
         </div>
       </div>
     </div>
@@ -865,7 +857,6 @@
   </div>
 
   <script>
-    // Dữ liệu thời khóa biểu thực tế từ UTT
     const scheduleData = {
       2: [
         {
@@ -874,7 +865,7 @@
           endTime: "14:30",
           room: "A2.102",
           teacher: "Nguyễn Quang Hòa",
-          color: "#5A7ADB",
+          color: "#0284C7",
           notes: "Tiết 7-8 | Lớp: Kiến trúc cảnh quan-1-1-26(N05)/75DCKN24"
         },
         {
@@ -883,7 +874,7 @@
           endTime: "18:10",
           room: "A2.102",
           teacher: "Vũ Thọ Hưng",
-          color: "#D49F3A",
+          color: "#D97706",
           notes: "Tiết 9-12 | Lớp: Kết cấu xây dựng cơ bản-1-1-26(N08)/75DCKN24"
         }
       ],
@@ -894,7 +885,7 @@
           endTime: "18:10",
           room: "A2.102",
           teacher: "Vũ Thọ Hưng",
-          color: "#D49F3A",
+          color: "#D97706",
           notes: "Tiết 8-12 | Lớp: Kết cấu xây dựng cơ bản-1-1-26(N08)/75DCKN24"
         }
       ],
@@ -905,7 +896,7 @@
           endTime: "10:20",
           room: "A2.101",
           teacher: "Nguyễn Minh Đức",
-          color: "#223771",
+          color: "#2563EB",
           notes: "Tiết 1-4 | Lớp: Nguyên lý quy hoạch-1-1-26(N08)/75DCKN24"
         },
         {
@@ -914,7 +905,7 @@
           endTime: "12:10",
           room: "A2.101",
           teacher: "Nguyễn Quang Hòa",
-          color: "#5A7ADB",
+          color: "#0284C7",
           notes: "Tiết 5-6 | Lớp: Kiến trúc cảnh quan-1-1-26(N05)/75DCKN24"
         }
       ],
@@ -925,7 +916,7 @@
           endTime: "12:10",
           room: "Trực tuyến",
           teacher: "Nguyễn Thị Thanh Hương",
-          color: "#EC4C00",
+          color: "#E11D48",
           notes: "Tiết 3-6 | Lớp: Tiếng Anh chuyên ngành-1-1-26(N26)/75DCKN23_75DCKN24"
         }
       ],
@@ -937,7 +928,7 @@
           endTime: "12:10",
           room: "Trực tuyến",
           teacher: "Nguyễn Thị Thanh Hương",
-          color: "#EC4C00",
+          color: "#E11D48",
           notes: "Tiết 3-6 | Lớp: Tiếng Anh chuyên ngành-1-1-26(N26)/75DCKN23_75DCKN24"
         }
       ],
@@ -986,16 +977,16 @@
 
     function renderDayView(day) {
       const listContainer = document.getElementById("scheduleCardsList");
-      document.getElementById("currentDayTitle").innerHTML = `${dayTitles[day]} ${day === getTodayCustomDay() ? '<span class="today-tag">Hôm nay</span>' : ''}`;
+      document.getElementById("currentDayTitle").innerHTML = `${dayTitles[day]} ${day === getTodayCustomDay() ? '<span class="today-tag">🔔 Hôm nay</span>' : ''}`;
       const items = scheduleData[day] || [];
-      document.getElementById("currentCountTag").innerText = items.length > 0 ? `${items.length} tiết học` : "Nghỉ học";
+      document.getElementById("currentCountTag").innerText = items.length > 0 ? `✨ ${items.length} tiết học` : "🥮 Nghỉ học";
 
       if (items.length === 0) {
         listContainer.innerHTML = `
           <div class="empty-state">
-            <div class="empty-icon-circle"><i class="fas fa-bed"></i></div>
+            <div class="empty-icon-circle">🥮</div>
             <div class="empty-title">Hôm nay không có lịch học!</div>
-            <div class="empty-desc">Bạn có thể dành thời gian nghỉ ngơi hoặc tự ôn tập nhé.</div>
+            <div class="empty-desc">Thưởng thức bánh rán Dorayaki và nghỉ ngơi thôi nào! 🐱✨</div>
           </div>
         `;
         return;
@@ -1049,11 +1040,11 @@
         const items = scheduleData[d] || [];
         const isToday = d === today;
         return `
-          <div class="grid-day-block" style="${isToday ? 'border-color:var(--primary);' : ''}">
-            <div class="grid-day-header" style="${isToday ? 'background:rgba(79, 70, 229, 0.08); color:var(--primary)' : ''}">
-              <span>${dayTitles[d]} ${isToday ? '<span class="today-tag" style="margin-left:6px;">Hôm nay</span>' : ''}</span>
-              <span style="font-size:12px; color: ${items.length > 0 ? 'var(--primary)' : 'var(--text-sub)'}">
-                ${items.length > 0 ? `${items.length} môn` : 'Nghỉ'}
+          <div class="grid-day-block" style="${isToday ? 'border-color:var(--doraemon-blue);' : ''}">
+            <div class="grid-day-header" style="${isToday ? 'background:var(--doraemon-sky); color:var(--doraemon-blue-dark)' : ''}">
+              <span>${dayTitles[d]} ${isToday ? '<span class="today-tag" style="margin-left:6px;">🔔 Hôm nay</span>' : ''}</span>
+              <span style="font-size:12px; color: ${items.length > 0 ? 'var(--doraemon-blue-dark)' : 'var(--text-sub)'}">
+                ${items.length > 0 ? `✨ ${items.length} môn` : '🥮 Nghỉ'}
               </span>
             </div>
             ${items.length === 0 ? `
@@ -1144,7 +1135,6 @@
       }, 4500);
     }
 
-    // Live clock update
     function updateClock() {
       const now = new Date();
       const hours = String(now.getHours()).padStart(2, '0');
@@ -1154,10 +1144,8 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Khởi chạy: Tự động chọn đúng Thứ của ngày hôm nay
     selectDay(getTodayCustomDay());
 
-    // Tự động làm mới trạng thái tiết học mỗi 30 giây
     setInterval(() => {
       if (!isMatrixView) {
         renderDayView(selectedDay);

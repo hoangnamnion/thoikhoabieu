@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/schedule_provider.dart';
+import '../../theme/doraemon_theme.dart';
 import '../../utils/schedule_helper.dart';
 import 'schedule_card.dart';
 
@@ -15,19 +16,20 @@ class DayViewWidget extends StatelessWidget {
     final now = DateTime.now();
     final todayCustomDay = ScheduleHelper.getFlutterWeekdayToCustomDay(now.weekday);
 
-    // Tính toán ngày trong tháng ứng với từng thứ của tuần hiện tại
     final currentMonday = now.subtract(Duration(days: now.weekday - 1));
 
     return Column(
       children: [
-        // Thanh chọn ngày phong cách iOS Segmented Scrollable
+        // Thanh chọn ngày phong cách Anime Doraemon
         Container(
           padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF0F172A) : Colors.white,
+            color: isDark ? const Color(0xFF131B2E) : Colors.white,
             border: Border(
               bottom: BorderSide(
-                color: isDark ? Colors.white.withOpacity(0.06) : Colors.black.withOpacity(0.05),
+                color: isDark
+                    ? Colors.white.withOpacity(0.06)
+                    : DoraemonTheme.doraemonBlue.withOpacity(0.1),
               ),
             ),
           ),
@@ -53,23 +55,23 @@ class DayViewWidget extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: isSelected
                           ? const LinearGradient(
-                              colors: [Color(0xFF4F46E5), Color(0xFF6366F1)],
+                              colors: [Color(0xFF00A0E9), Color(0xFF38BDF8)],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             )
                           : null,
                       color: !isSelected
-                          ? (isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9))
+                          ? (isDark ? const Color(0xFF1E293B) : const Color(0xFFF0F9FF))
                           : null,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(18),
                       border: isToday && !isSelected
-                          ? Border.all(color: const Color(0xFF4F46E5), width: 1.8)
+                          ? Border.all(color: const Color(0xFF00A0E9), width: 2.0)
                           : null,
                       boxShadow: isSelected
                           ? [
                               BoxShadow(
-                                color: const Color(0xFF4F46E5).withOpacity(0.35),
-                                blurRadius: 10,
+                                color: const Color(0xFF00A0E9).withOpacity(0.38),
+                                blurRadius: 12,
                                 offset: const Offset(0, 4),
                               )
                             ]
@@ -85,7 +87,7 @@ class DayViewWidget extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                             color: isSelected
                                 ? Colors.white
-                                : (isDark ? Colors.grey[400] : const Color(0xFF64748B)),
+                                : (isDark ? Colors.grey[400] : const Color(0xFF0284C7)),
                           ),
                         ),
                         const SizedBox(height: 3),
@@ -100,14 +102,14 @@ class DayViewWidget extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 4),
-                        // Dấu chấm chỉ báo có lịch học
+                        // Dấu chuông / chấm chỉ báo
                         Container(
-                          width: 5,
-                          height: 5,
+                          width: 6,
+                          height: 6,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: itemsCount > 0
-                                ? (isSelected ? Colors.white : const Color(0xFF10B981))
+                                ? (isSelected ? const Color(0xFFFFD800) : const Color(0xFF10B981))
                                 : Colors.transparent,
                           ),
                         ),
@@ -120,7 +122,7 @@ class DayViewWidget extends StatelessWidget {
           ),
         ),
 
-        // Tiêu đề ngày & Badge số lượng tiết
+        // Tiêu đề ngày & Badge số lượng tiết phong cách Anime
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 14, 20, 8),
           child: Row(
@@ -139,18 +141,25 @@ class DayViewWidget extends StatelessWidget {
                   if (todayCustomDay == provider.selectedDay) ...[
                     const SizedBox(width: 8),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF4F46E5).withOpacity(0.12),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: const Text(
-                        'Hôm nay',
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF4F46E5),
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF00A0E9), Color(0xFF38BDF8)],
                         ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Row(
+                        children: [
+                          Text('🔔 ', style: TextStyle(fontSize: 10)),
+                          Text(
+                            'Hôm nay',
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -159,19 +168,19 @@ class DayViewWidget extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                  color: isDark ? const Color(0xFF1E293B) : const Color(0xFFE0F2FE),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   provider.currentDayItems.isNotEmpty
-                      ? '${provider.currentDayItems.length} tiết học'
-                      : 'Nghỉ học',
+                      ? '✨ ${provider.currentDayItems.length} tiết học'
+                      : '🥮 Nghỉ học',
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                     color: provider.currentDayItems.isNotEmpty
-                        ? const Color(0xFF4F46E5)
-                        : (isDark ? Colors.grey[400] : Colors.grey[600]),
+                        ? const Color(0xFF0284C7)
+                        : const Color(0xFFF59E0B),
                   ),
                 ),
               ),
@@ -182,7 +191,7 @@ class DayViewWidget extends StatelessWidget {
         // Danh sách tiết học
         Expanded(
           child: RefreshIndicator(
-            color: const Color(0xFF4F46E5),
+            color: DoraemonTheme.doraemonBlue,
             onRefresh: () => provider.refreshSchedule(),
             child: provider.currentDayItems.isEmpty
                 ? ListView(
@@ -190,41 +199,39 @@ class DayViewWidget extends StatelessWidget {
                       parent: BouncingScrollPhysics(),
                     ),
                     children: [
-                      const SizedBox(height: 70),
+                      const SizedBox(height: 60),
                       Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              width: 80,
-                              height: 80,
+                              width: 90,
+                              height: 90,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: isDark
                                     ? const Color(0xFF1E293B)
-                                    : const Color(0xFFF1F5F9),
+                                    : const Color(0xFFFEF3C7),
                               ),
-                              child: Icon(
-                                CupertinoIcons.bed_double_fill,
-                                size: 38,
-                                color: isDark ? Colors.grey[500] : Colors.grey[400],
+                              child: const Center(
+                                child: Text('🥮', style: TextStyle(fontSize: 48)),
                               ),
                             ),
                             const SizedBox(height: 16),
                             Text(
                               'Hôm nay không có lịch học!',
                               style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: isDark ? Colors.grey[300] : Colors.grey[700],
+                                fontSize: 17,
+                                fontWeight: FontWeight.w800,
+                                color: isDark ? Colors.grey[300] : const Color(0xFF0F172A),
                               ),
                             ),
                             const SizedBox(height: 6),
                             Text(
-                              'Hãy tận hưởng thời gian nghỉ ngơi hoặc tự ôn tập nhé.',
+                              'Thưởng thức bánh rán Dorayaki và nghỉ ngơi thôi nào! 🐱✨',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: isDark ? Colors.grey[500] : Colors.grey[500],
+                                color: isDark ? Colors.grey[400] : const Color(0xFF64748B),
                               ),
                             ),
                           ],

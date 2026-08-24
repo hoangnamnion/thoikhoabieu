@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/schedule_provider.dart';
+import '../theme/doraemon_theme.dart';
 import 'settings_screen.dart';
 import 'widgets/day_view.dart';
 import 'widgets/matrix_grid_view.dart';
@@ -18,7 +19,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: isDark ? const Color(0xFF0F172A) : Colors.white,
+        backgroundColor: isDark ? const Color(0xFF131B2E) : Colors.white,
         title: Row(
           children: [
             // Logo ứng dụng
@@ -26,37 +27,24 @@ class HomeScreen extends StatelessWidget {
               width: 38,
               height: 38,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF4F46E5).withOpacity(0.2),
+                    color: DoraemonTheme.doraemonBlue.withOpacity(0.25),
                     blurRadius: 8,
                     offset: const Offset(0, 3),
                   ),
                 ],
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(12),
                 child: Image.asset(
                   'assets/logo.png',
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFF4F46E5), Color(0xFF8B5CF6)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                    ),
+                    color: DoraemonTheme.doraemonBlue,
                     child: const Center(
-                      child: Text(
-                        'CN',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 14,
-                        ),
-                      ),
+                      child: Text('🐱', style: TextStyle(fontSize: 20)),
                     ),
                   ),
                 ),
@@ -67,15 +55,21 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    timetable?.semester ?? 'Thời Khóa Biểu',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 16,
-                      color: isDark ? Colors.white : const Color(0xFF0F172A),
-                      letterSpacing: -0.2,
-                    ),
-                    overflow: TextOverflow.ellipsis,
+                  Row(
+                    children: [
+                      Text(
+                        timetable?.semester ?? 'Thời Khóa Biểu',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16,
+                          color: isDark ? Colors.white : const Color(0xFF0F172A),
+                          letterSpacing: -0.2,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(width: 4),
+                      const Text('🔔', style: TextStyle(fontSize: 13)),
+                    ],
                   ),
                   Row(
                     children: [
@@ -93,8 +87,8 @@ class HomeScreen extends StatelessWidget {
                           timetable?.studentName ?? 'Đang tải...',
                           style: TextStyle(
                             fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: isDark ? Colors.grey[400] : Colors.grey[600],
+                            fontWeight: FontWeight.w600,
+                            color: isDark ? Colors.grey[400] : const Color(0xFF00A0E9),
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -113,17 +107,19 @@ class HomeScreen extends StatelessWidget {
                 ? 'Xem bảng lưới toàn tuần'
                 : 'Xem từng ngày',
             icon: Container(
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.all(7),
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
-                borderRadius: BorderRadius.circular(10),
+                color: isDark
+                    ? const Color(0xFF1E293B)
+                    : DoraemonTheme.doraemonSkyLight,
+                borderRadius: BorderRadius.circular(11),
               ),
               child: Icon(
                 provider.viewMode == ViewMode.dayView
                     ? CupertinoIcons.square_grid_2x2_fill
                     : CupertinoIcons.list_bullet,
-                size: 20,
-                color: const Color(0xFF4F46E5),
+                size: 19,
+                color: DoraemonTheme.doraemonBlue,
               ),
             ),
             onPressed: () => provider.toggleViewMode(),
@@ -133,14 +129,14 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             tooltip: 'Cài đặt Cloud & Thông báo',
             icon: Container(
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.all(7),
               decoration: BoxDecoration(
                 color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(11),
               ),
               child: Icon(
                 CupertinoIcons.gear_alt_fill,
-                size: 20,
+                size: 19,
                 color: isDark ? Colors.grey[300] : Colors.grey[700],
               ),
             ),
@@ -197,7 +193,7 @@ class HomeScreen extends StatelessWidget {
               right: 0,
               child: LinearProgressIndicator(
                 backgroundColor: Colors.transparent,
-                color: const Color(0xFF4F46E5),
+                color: DoraemonTheme.doraemonBlue,
                 minHeight: 2.5,
               ),
             ),
