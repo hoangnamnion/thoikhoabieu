@@ -22,58 +22,66 @@ class ScheduleCard extends StatelessWidget {
 
     switch (status) {
       case ScheduleStatus.ongoing:
-        statusBgColor = const Color(0xFF10B981).withOpacity(0.18);
+        statusBgColor = const Color(0xFF10B981).withOpacity(0.16);
         statusTextColor = const Color(0xFF10B981);
         statusText = 'Đang diễn ra';
-        statusIcon = CupertinoIcons.play_circle_fill;
+        statusIcon = CupertinoIcons.play_arrow_solid;
         break;
       case ScheduleStatus.upcoming:
-        statusBgColor = const Color(0xFF3B82F6).withOpacity(0.15);
+        statusBgColor = const Color(0xFF3B82F6).withOpacity(0.14);
         statusTextColor = const Color(0xFF3B82F6);
         statusText = 'Sắp diễn ra';
-        statusIcon = CupertinoIcons.time;
+        statusIcon = CupertinoIcons.time_solid;
         break;
       case ScheduleStatus.finished:
-        statusBgColor = (isDark ? Colors.grey[800] : Colors.grey[200])!;
+        statusBgColor = isDark ? Colors.white.withOpacity(0.06) : Colors.black.withOpacity(0.05);
         statusTextColor = isDark ? Colors.grey[400]! : Colors.grey[600]!;
         statusText = 'Đã kết thúc';
-        statusIcon = CupertinoIcons.checkmark_circle_fill;
+        statusIcon = CupertinoIcons.check_mark_circled_solid;
         break;
     }
 
     final accentColor = item.color;
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF1E293B) : Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(22),
         border: Border.all(
           color: status == ScheduleStatus.ongoing
-              ? accentColor.withOpacity(0.6)
-              : (isDark ? Colors.white.withOpacity(0.08) : Colors.black.withOpacity(0.05)),
+              ? accentColor.withOpacity(0.7)
+              : (isDark ? Colors.white.withOpacity(0.08) : Colors.black.withOpacity(0.06)),
           width: status == ScheduleStatus.ongoing ? 2.0 : 1.0,
         ),
         boxShadow: [
           BoxShadow(
             color: isDark
-                ? Colors.black.withOpacity(0.3)
-                : accentColor.withOpacity(0.08),
-            blurRadius: 16,
+                ? Colors.black.withOpacity(0.35)
+                : (status == ScheduleStatus.ongoing
+                    ? accentColor.withOpacity(0.15)
+                    : Colors.black.withOpacity(0.04)),
+            blurRadius: status == ScheduleStatus.ongoing ? 20 : 14,
             offset: const Offset(0, 6),
           ),
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(22),
         child: IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Thanh màu chỉ thị bên trái
+              // Dải màu nhận diện môn học bên trái
               Container(
                 width: 6,
-                color: accentColor,
+                decoration: BoxDecoration(
+                  color: accentColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(22),
+                    bottomLeft: Radius.circular(22),
+                  ),
+                ),
               ),
               Expanded(
                 child: Padding(
@@ -81,43 +89,48 @@ class ScheduleCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Header: Thời gian & Trạng thái
+                      // Header: Thời gian & Trạng thái tiết học
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              Icon(
-                                CupertinoIcons.clock,
-                                size: 16,
-                                color: accentColor,
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                '${item.startTime} - ${item.endTime}',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            decoration: BoxDecoration(
+                              color: accentColor.withOpacity(0.12),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  CupertinoIcons.clock_fill,
+                                  size: 13,
                                   color: accentColor,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: 5),
+                                Text(
+                                  '${item.startTime} - ${item.endTime}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 13,
+                                    color: accentColor,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 4,
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
                             decoration: BoxDecoration(
                               color: statusBgColor,
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(
                                   statusIcon,
-                                  size: 13,
+                                  size: 12,
                                   color: statusTextColor,
                                 ),
                                 const SizedBox(width: 4),
@@ -125,7 +138,7 @@ class ScheduleCard extends StatelessWidget {
                                   statusText,
                                   style: TextStyle(
                                     fontSize: 11,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w700,
                                     color: statusTextColor,
                                   ),
                                 ),
@@ -134,38 +147,48 @@ class ScheduleCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 12),
 
                       // Tên môn học
                       Text(
                         item.subjectName,
                         style: TextStyle(
                           fontSize: 17,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w800,
                           color: isDark ? Colors.white : const Color(0xFF0F172A),
+                          letterSpacing: -0.2,
                         ),
                       ),
                       const SizedBox(height: 10),
 
-                      // Thông tin Phòng & Giảng viên
+                      // Thông tin: Phòng học & Giảng viên
                       Row(
                         children: [
                           Expanded(
                             child: Row(
                               children: [
-                                Icon(
-                                  CupertinoIcons.location_solid,
-                                  size: 15,
-                                  color: isDark ? Colors.grey[400] : Colors.grey[600],
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    color: isDark
+                                        ? Colors.white.withOpacity(0.06)
+                                        : Colors.grey.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Icon(
+                                    CupertinoIcons.location_solid,
+                                    size: 13,
+                                    color: isDark ? Colors.grey[300] : Colors.grey[700],
+                                  ),
                                 ),
-                                const SizedBox(width: 5),
+                                const SizedBox(width: 7),
                                 Flexible(
                                   child: Text(
                                     item.room,
                                     style: TextStyle(
                                       fontSize: 13,
-                                      color: isDark ? Colors.grey[300] : Colors.grey[700],
-                                      fontWeight: FontWeight.w500,
+                                      color: isDark ? Colors.grey[200] : const Color(0xFF334155),
+                                      fontWeight: FontWeight.w600,
                                     ),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -176,19 +199,28 @@ class ScheduleCard extends StatelessWidget {
                           Expanded(
                             child: Row(
                               children: [
-                                Icon(
-                                  CupertinoIcons.person_crop_circle,
-                                  size: 15,
-                                  color: isDark ? Colors.grey[400] : Colors.grey[600],
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    color: isDark
+                                        ? Colors.white.withOpacity(0.06)
+                                        : Colors.grey.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Icon(
+                                    CupertinoIcons.person_crop_circle_fill,
+                                    size: 13,
+                                    color: isDark ? Colors.grey[300] : Colors.grey[700],
+                                  ),
                                 ),
-                                const SizedBox(width: 5),
+                                const SizedBox(width: 7),
                                 Flexible(
                                   child: Text(
                                     item.teacher,
                                     style: TextStyle(
                                       fontSize: 13,
-                                      color: isDark ? Colors.grey[300] : Colors.grey[700],
-                                      fontWeight: FontWeight.w500,
+                                      color: isDark ? Colors.grey[200] : const Color(0xFF334155),
+                                      fontWeight: FontWeight.w600,
                                     ),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -199,24 +231,29 @@ class ScheduleCard extends StatelessWidget {
                         ],
                       ),
 
-                      // Ghi chú nếu có
+                      // Ghi chú chi tiết (Mã lớp, tiết học)
                       if (item.notes.isNotEmpty) ...[
                         const SizedBox(height: 10),
                         Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                           decoration: BoxDecoration(
                             color: isDark
-                                ? Colors.white.withOpacity(0.04)
-                                : const Color(0xFFF8FAFC),
-                            borderRadius: BorderRadius.circular(8),
+                                ? const Color(0xFF0F172A)
+                                : const Color(0xFFF1F5F9),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: isDark
+                                  ? Colors.white.withOpacity(0.04)
+                                  : Colors.black.withOpacity(0.03),
+                            ),
                           ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Icon(
-                                CupertinoIcons.info_circle,
-                                size: 14,
+                                CupertinoIcons.info_circle_fill,
+                                size: 13,
                                 color: isDark ? Colors.grey[400] : Colors.grey[500],
                               ),
                               const SizedBox(width: 6),
@@ -224,8 +261,8 @@ class ScheduleCard extends StatelessWidget {
                                 child: Text(
                                   item.notes,
                                   style: TextStyle(
-                                    fontSize: 12,
-                                    fontStyle: FontStyle.italic,
+                                    fontSize: 11.5,
+                                    fontWeight: FontWeight.w500,
                                     color: isDark ? Colors.grey[400] : Colors.grey[600],
                                   ),
                                 ),

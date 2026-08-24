@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Thời Khóa Biểu Tuần iOS - UTT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-light: #EEF2FF;
+      --primary-gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+      --bg-light: #F8FAFC;
+      --card-light: #FFFFFF;
+      --text-main: #0F172A;
+      --text-sub: #64748B;
+      --border-light: rgba(226, 232, 240, 0.9);
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+      --blue: #3B82F6;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 12px 25px -5px rgba(79, 70, 229, 0.12);
+    }
+
+    [data-theme="dark"] {
+      --bg-light: #090D16;
+      --card-light: #131B2E;
+      --text-main: #F8FAFC;
+      --text-sub: #94A3B8;
+      --border-light: rgba(255, 255, 255, 0.08);
+      --primary-light: rgba(79, 70, 229, 0.15);
+      --shadow-md: 0 12px 25px -5px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: radial-gradient(circle at top right, #1E1B4B 0%, #0F172A 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: var(--text-main);
+    }
+
+    .preview-header {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .preview-header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FFFFFF 0%, #C7D2FE 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+
+    .preview-header p {
+      font-size: 13.5px;
+      color: #94A3B8;
+    }
+
+    .theme-toggle-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .btn-toggle-view {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-toggle-view:hover {
+      background: rgba(255, 255, 255, 0.22);
+      transform: translateY(-2px);
+    }
+
+    /* iPhone Frame Mockup */
+    .iphone-frame {
+      width: 100%;
+      max-width: 414px;
+      height: 852px;
+      background: var(--bg-light);
+      border-radius: 54px;
+      box-shadow: 0 0 0 12px #262B3B, 0 30px 70px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border: 4px solid #1E2333;
+      transition: background 0.3s ease;
+    }
+
+    /* Dynamic Island */
+    .dynamic-island {
+      position: absolute;
+      top: 11px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 124px;
+      height: 32px;
+      background: #000;
+      border-radius: 20px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+    }
+
+    .island-camera {
+      width: 11px;
+      height: 11px;
+      background: #111b2b;
+      border-radius: 50%;
+      border: 1px solid #1e293b;
+    }
+
+    .island-sensor {
+      width: 10px;
+      height: 10px;
+      background: #0d131f;
+      border-radius: 50%;
+    }
+
+    /* iOS Status Bar */
+    .status-bar {
+      height: 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0 28px 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      z-index: 100;
+    }
+
+    .status-icons {
+      display: flex;
+      gap: 6px;
+      font-size: 12px;
+    }
+
+    /* App Header */
+    .app-header {
+      padding: 10px 18px 12px;
+      background: var(--card-light);
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s ease;
+    }
+
+    .student-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+      flex-shrink: 0;
+    }
+
+    .app-title-group {
+      margin-left: 10px;
+      flex: 1;
+    }
+
+    .app-title-group h2 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.2px;
+    }
+
+    .student-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-sub);
+      margin-top: 1px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.7);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      border: 1px solid var(--border-light);
+      background: var(--bg-light);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 14px;
+    }
+
+    .icon-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* Day Segment Selector */
+    .day-selector-container {
+      background: var(--card-light);
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .day-selector {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .day-selector::-webkit-scrollbar {
+      display: none;
+    }
+
+    .day-pill {
+      flex: 1;
+      min-width: 44px;
+      padding: 8px 4px;
+      border-radius: 16px;
+      background: var(--bg-light);
+      border: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .day-pill .day-name {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 2px;
+    }
+
+    .day-pill .day-num {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 3px;
+    }
+
+    .day-pill .day-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .day-pill.is-rest .day-dot {
+      background: transparent;
+    }
+
+    .day-pill.active {
+      background: var(--primary-gradient);
+      border-color: transparent;
+      box-shadow: 0 6px 14px rgba(79, 70, 229, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .day-pill.active .day-name,
+    .day-pill.active .day-num {
+      color: #FFFFFF;
+    }
+
+    .day-pill.active .day-dot {
+      background: #FFFFFF;
+    }
+
+    /* Main Scroll Content */
+    .app-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px;
+      scrollbar-width: none;
+    }
+
+    .app-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Section Title */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+
+    .section-header h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .today-tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--primary);
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+
+    .count-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    /* Schedule Card */
+    .schedule-card {
+      background: var(--card-light);
+      border-radius: 20px;
+      border: 1px solid var(--border-light);
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      display: flex;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .schedule-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-accent-bar {
+      width: 6px;
+      flex-shrink: 0;
+    }
+
+    .card-body {
+      flex: 1;
+      padding: 16px;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .time-slot {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 10px;
+    }
+
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-ongoing {
+      background: rgba(16, 185, 129, 0.16);
+      color: #10B981;
+    }
+
+    .status-upcoming {
+      background: rgba(59, 130, 246, 0.14);
+      color: #3B82F6;
+    }
+
+    .status-finished {
+      background: rgba(148, 163, 184, 0.18);
+      color: #64748B;
+    }
+
+    .subject-title {
+      font-size: 16.5px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      line-height: 1.35;
+      letter-spacing: -0.2px;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 12px;
+      font-size: 12.5px;
+      color: var(--text-sub);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .meta-icon-box {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      background: var(--bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--text-main);
+    }
+
+    .notes-box {
+      background: var(--bg-light);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 11.5px;
+      color: var(--text-sub);
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      line-height: 1.4;
+      margin-top: 4px;
+    }
+
+    /* Rest Day Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .empty-icon-circle {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: var(--card-light);
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 32px;
+      color: var(--text-sub);
+      opacity: 0.7;
+    }
+
+    .empty-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .empty-desc {
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    /* Weekly Grid View */
+    .matrix-grid-view {
+      display: none;
+    }
+
+    .matrix-grid-view.active {
+      display: block;
+    }
+
+    .day-view-container.hidden {
+      display: none;
+    }
+
+    .grid-day-block {
+      background: var(--card-light);
+      border-radius: 18px;
+      border: 1px solid var(--border-light);
+      margin-bottom: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .grid-day-header {
+      background: var(--bg-light);
+      padding: 11px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 800;
+      font-size: 14.5px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .grid-item {
+      padding: 12px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .grid-item:last-child {
+      border-bottom: none;
+    }
+
+    .grid-time-badge {
+      padding: 6px 8px;
+      border-radius: 10px;
+      font-size: 11.5px;
+      font-weight: 800;
+      text-align: center;
+      min-width: 82px;
+    }
+
+    .grid-info-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .grid-info-sub {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-top: 3px;
+    }
+
+    /* iOS Bottom Home Bar */
+    .home-bar-container {
+      height: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--card-light);
+    }
+
+    .home-indicator {
+      width: 134px;
+      height: 5px;
+      background: var(--text-main);
+      opacity: 0.3;
+      border-radius: 100px;
+    }
+
+    /* Settings Modal */
+    .modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 9999;
+      display: none;
+      align-items: flex-end;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .settings-sheet {
+      background: var(--card-light);
+      width: 100%;
+      border-radius: 28px 28px 0 0;
+      padding: 22px;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .sheet-header h3 {
+      font-size: 16.5px;
+      font-weight: 800;
+    }
+
+    .input-group {
+      margin-bottom: 14px;
+    }
+
+    .input-group label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-sub);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border-light);
+      background: var(--bg-light);
+      color: var(--text-main);
+      font-size: 13px;
+    }
+
+    .btn-save-cloud {
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      border: none;
+      background: var(--primary-gradient);
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="preview-header">
+    <h1>📱 Ứng Dụng Thời Khóa Biểu Tuần iOS</h1>
+    <p>Sinh viên: <b>Cao Văn Nam (75DCKN24)</b> - UTT</p>
+  </div>
+
+  <div class="theme-toggle-bar">
+    <button class="btn-toggle-view" onclick="toggleTheme()">
+      <i class="fas fa-moon"></i> Đổi Sáng/Tối
+    </button>
+    <button class="btn-toggle-view" onclick="toggleViewMode()">
+      <i class="fas fa-table-cells"></i> <span id="viewModeText">Đổi Bảng Lưới Tuần</span>
+    </button>
+  </div>
+
+  <!-- iPhone Frame -->
+  <div class="iphone-frame" id="phoneFrame">
+    
+    <!-- Dynamic Island -->
+    <div class="dynamic-island">
+      <div class="island-camera"></div>
+      <div class="island-sensor"></div>
+    </div>
+
+    <!-- iOS Status Bar -->
+    <div class="status-bar">
+      <span id="liveTime">09:41</span>
+      <div class="status-icons">
+        <i class="fas fa-signal"></i>
+        <i class="fas fa-wifi"></i>
+        <i class="fas fa-battery-full"></i>
+      </div>
+    </div>
+
+    <!-- App Header -->
+    <div class="app-header">
+      <img src="logoapp.png" alt="App Logo" style="width:38px; height:38px; border-radius:11px; object-fit:cover; box-shadow:0 4px 10px rgba(79, 70, 229, 0.25); flex-shrink:0;">
+      <div class="app-title-group">
+        <h2>Học kỳ 1 - UTT</h2>
+        <div class="student-badge">
+          <div class="status-dot"></div>
+          <span>Cao Văn Nam (75DCKN24)</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" onclick="toggleViewMode()" title="Chuyển chế độ xem">
+          <i class="fas fa-table-cells" id="viewIcon"></i>
+        </button>
+        <button class="icon-btn" onclick="openSettings()" title="Cài đặt Cloud">
+          <i class="fas fa-gear"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Day View Segment Selector -->
+    <div class="day-selector-container" id="daySelectorContainer">
+      <div class="day-selector">
+        <div class="day-pill active" onclick="selectDay(2)">
+          <span class="day-name">T2</span>
+          <span class="day-num">24</span>
+          <div class="day-dot"></div>
+        </div>
+        <div class="day-pill" onclick="selectDay(3)">
+          <span class="day-name">T3</span>
+          <span class="day-num">25</span>
+          <div class="day-dot"></div>
+        </div>
+        <div class="day-pill" onclick="selectDay(4)">
+          <span class="day-name">T4</span>
+          <span class="day-num">26</span>
+          <div class="day-dot"></div>
+        </div>
+        <div class="day-pill" onclick="selectDay(5)">
+          <span class="day-name">T5</span>
+          <span class="day-num">27</span>
+          <div class="day-dot"></div>
+        </div>
+        <div class="day-pill is-rest" onclick="selectDay(6)">
+          <span class="day-name">T6</span>
+          <span class="day-num">28</span>
+          <div class="day-dot"></div>
+        </div>
+        <div class="day-pill" onclick="selectDay(7)">
+          <span class="day-name">T7</span>
+          <span class="day-num">29</span>
+          <div class="day-dot"></div>
+        </div>
+        <div class="day-pill is-rest" onclick="selectDay(8)">
+          <span class="day-name">CN</span>
+          <span class="day-num">30</span>
+          <div class="day-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- App Main Content Area -->
+    <div class="app-content">
+      
+      <!-- Day View Container -->
+      <div class="day-view-container" id="dayViewContainer">
+        <div class="section-header">
+          <h3 id="currentDayTitle">Thứ Hai <span class="today-tag" id="todayBadge">Hôm nay</span></h3>
+          <span class="count-tag" id="currentCountTag">2 tiết học</span>
+        </div>
+        <div id="scheduleCardsList">
+          <!-- Cards populated by JS -->
+        </div>
+      </div>
+
+      <!-- Weekly Matrix Grid View -->
+      <div class="matrix-grid-view" id="matrixGridView">
+        <div class="section-header">
+          <h3>Bảng Lưới Cả Tuần</h3>
+          <span class="count-tag">7 môn / tuần</span>
+        </div>
+        <div id="matrixGridList">
+          <!-- Grid items populated by JS -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Settings Bottom Sheet Modal -->
+    <div class="modal-overlay" id="settingsModal" onclick="closeSettings(event)">
+      <div class="settings-sheet" onclick="event.stopPropagation()">
+        <div class="sheet-header">
+          <h3>⚙️ Cài đặt Nguồn Cloud & Thông báo</h3>
+          <button class="icon-btn" onclick="closeSettings(event)" style="width:30px;height:30px">
+            <i class="fas fa-xmark"></i>
+          </button>
+        </div>
+        <div class="input-group">
+          <label>ĐƯỜNG DẪN CLOUD API (JSON URL):</label>
+          <input type="text" id="cloudUrlInput" value="https://raw.githubusercontent.com/minh-developer/sample-api/main/timetable.json">
+        </div>
+        <div class="input-group" style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <label style="margin:0; font-size:13px; font-weight:700">Thông báo trước 30 phút</label>
+            <span style="font-size:11px; color:var(--text-sub)">Tự động nhắc trước khi vào tiết</span>
+          </div>
+          <input type="checkbox" checked style="width:20px; height:20px; accent-color:var(--primary)">
+        </div>
+        <div style="margin-bottom: 14px;">
+          <button class="btn-toggle-view" onclick="testNotificationWeb()" style="width:100%; justify-content:center; background:rgba(79, 70, 229, 0.12); color:var(--primary); border-color:var(--primary)">
+            <i class="fas fa-bell"></i> 🔔 Gửi thử thông báo ngay
+          </button>
+        </div>
+        <button class="btn-save-cloud" onclick="saveSettings()">
+          <i class="fas fa-check"></i> Lưu & Đồng bộ ngay
+        </button>
+      </div>
+    </div>
+
+    <!-- iOS Banner Notification Popup -->
+    <div id="iosBannerNotif" style="position:absolute; top:-100px; left:16px; right:16px; background:rgba(30, 41, 59, 0.96); backdrop-filter:blur(20px); color:#fff; padding:14px 16px; border-radius:22px; box-shadow:0 15px 35px rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.15); z-index:10000; transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display:flex; align-items:center; gap:12px;">
+      <img src="logoapp.png" alt="Logo" style="width:40px; height:40px; border-radius:11px; object-fit:cover; flex-shrink:0;">
+      <div style="flex:1;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <b style="font-size:13px; color:#F8FAFC;">THỜI KHÓA BIỂU</b>
+          <span style="font-size:10px; color:#94A3B8;">Vừa xong</span>
+        </div>
+        <div style="font-size:12px; color:#E2E8F0; margin-top:2px; font-weight:500;">
+          ⏰ <b>[Test]</b> Nhắc nhở: Sắp có tiết <b>Kiến trúc cảnh quan</b> (12:45 tại A2.102)
+        </div>
+      </div>
+    </div>
+
+    <!-- iOS Home Indicator Bar -->
+    <div class="home-bar-container">
+      <div class="home-indicator"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // Dữ liệu thời khóa biểu thực tế từ UTT
+    const scheduleData = {
+      2: [
+        {
+          subject: "Kiến trúc cảnh quan",
+          startTime: "12:45",
+          endTime: "14:30",
+          room: "A2.102",
+          teacher: "Nguyễn Quang Hòa",
+          color: "#5A7ADB",
+          notes: "Tiết 7-8 | Lớp: Kiến trúc cảnh quan-1-1-26(N05)/75DCKN24"
+        },
+        {
+          subject: "Kết cấu xây dựng cơ bản",
+          startTime: "14:35",
+          endTime: "18:10",
+          room: "A2.102",
+          teacher: "Vũ Thọ Hưng",
+          color: "#D49F3A",
+          notes: "Tiết 9-12 | Lớp: Kết cấu xây dựng cơ bản-1-1-26(N08)/75DCKN24"
+        }
+      ],
+      3: [
+        {
+          subject: "Kết cấu xây dựng cơ bản",
+          startTime: "13:40",
+          endTime: "18:10",
+          room: "A2.102",
+          teacher: "Vũ Thọ Hưng",
+          color: "#D49F3A",
+          notes: "Tiết 8-12 | Lớp: Kết cấu xây dựng cơ bản-1-1-26(N08)/75DCKN24"
+        }
+      ],
+      4: [
+        {
+          subject: "Nguyên lý quy hoạch",
+          startTime: "06:45",
+          endTime: "10:20",
+          room: "A2.101",
+          teacher: "Nguyễn Minh Đức",
+          color: "#223771",
+          notes: "Tiết 1-4 | Lớp: Nguyên lý quy hoạch-1-1-26(N08)/75DCKN24"
+        },
+        {
+          subject: "Kiến trúc cảnh quan",
+          startTime: "10:25",
+          endTime: "12:10",
+          room: "A2.101",
+          teacher: "Nguyễn Quang Hòa",
+          color: "#5A7ADB",
+          notes: "Tiết 5-6 | Lớp: Kiến trúc cảnh quan-1-1-26(N05)/75DCKN24"
+        }
+      ],
+      5: [
+        {
+          subject: "Tiếng Anh chuyên ngành",
+          startTime: "08:35",
+          endTime: "12:10",
+          room: "Trực tuyến",
+          teacher: "Nguyễn Thị Thanh Hương",
+          color: "#EC4C00",
+          notes: "Tiết 3-6 | Lớp: Tiếng Anh chuyên ngành-1-1-26(N26)/75DCKN23_75DCKN24"
+        }
+      ],
+      6: [],
+      7: [
+        {
+          subject: "Tiếng Anh chuyên ngành",
+          startTime: "08:35",
+          endTime: "12:10",
+          room: "Trực tuyến",
+          teacher: "Nguyễn Thị Thanh Hương",
+          color: "#EC4C00",
+          notes: "Tiết 3-6 | Lớp: Tiếng Anh chuyên ngành-1-1-26(N26)/75DCKN23_75DCKN24"
+        }
+      ],
+      8: []
+    };
+
+    const dayTitles = {
+      2: "Thứ Hai (24/08)",
+      3: "Thứ Ba (25/08)",
+      4: "Thứ Tư (26/08)",
+      5: "Thứ Năm (27/08)",
+      6: "Thứ Sáu (28/08)",
+      7: "Thứ Bảy (29/08)",
+      8: "Chủ Nhật (30/08)"
+    };
+
+    let selectedDay = 2;
+    let isMatrixView = false;
+
+    function getScheduleStatusDynamic(startTimeStr, endTimeStr, dayNum) {
+      const now = new Date();
+      const jsDay = now.getDay();
+      const currentCustomDay = jsDay === 0 ? 8 : jsDay + 1;
+
+      if (dayNum < currentCustomDay) {
+        return { status: "finished", statusText: "Đã kết thúc", icon: "fa-circle-check" };
+      } else if (dayNum > currentCustomDay) {
+        return { status: "upcoming", statusText: "Sắp diễn ra", icon: "fa-hourglass-start" };
+      }
+
+      const [startHour, startMin] = startTimeStr.split(':').map(Number);
+      const [endHour, endMin] = endTimeStr.split(':').map(Number);
+      
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+      const startMinutes = startHour * 60 + startMin;
+      const endMinutes = endHour * 60 + endMin;
+
+      if (currentMinutes < startMinutes) {
+        return { status: "upcoming", statusText: "Sắp diễn ra", icon: "fa-hourglass-start" };
+      } else if (currentMinutes >= startMinutes && currentMinutes <= endMinutes) {
+        return { status: "ongoing", statusText: "Đang diễn ra", icon: "fa-circle-play" };
+      } else {
+        return { status: "finished", statusText: "Đã kết thúc", icon: "fa-circle-check" };
+      }
+    }
+
+    function renderDayView(day) {
+      const listContainer = document.getElementById("scheduleCardsList");
+      document.getElementById("currentDayTitle").innerHTML = `${dayTitles[day]} ${day === getTodayCustomDay() ? '<span class="today-tag">Hôm nay</span>' : ''}`;
+      const items = scheduleData[day] || [];
+      document.getElementById("currentCountTag").innerText = items.length > 0 ? `${items.length} tiết học` : "Nghỉ học";
+
+      if (items.length === 0) {
+        listContainer.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon-circle"><i class="fas fa-bed"></i></div>
+            <div class="empty-title">Hôm nay không có lịch học!</div>
+            <div class="empty-desc">Bạn có thể dành thời gian nghỉ ngơi hoặc tự ôn tập nhé.</div>
+          </div>
+        `;
+        return;
+      }
+
+      listContainer.innerHTML = items.map(item => {
+        const dynamic = getScheduleStatusDynamic(item.startTime, item.endTime, day);
+        return `
+          <div class="schedule-card">
+            <div class="card-accent-bar" style="background-color: ${item.color}"></div>
+            <div class="card-body">
+              <div class="card-top">
+                <div class="time-slot" style="background:${item.color}15; color: ${item.color}">
+                  <i class="far fa-clock"></i>
+                  <span>${item.startTime} - ${item.endTime}</span>
+                </div>
+                <div class="status-badge status-${dynamic.status}">
+                  <i class="fas ${dynamic.icon}"></i>
+                  <span>${dynamic.statusText}</span>
+                </div>
+              </div>
+              <div class="subject-title">${item.subject}</div>
+              <div class="meta-row">
+                <div class="meta-item">
+                  <div class="meta-icon-box"><i class="fas fa-location-dot"></i></div>
+                  <span>${item.room}</span>
+                </div>
+                <div class="meta-item">
+                  <div class="meta-icon-box"><i class="fas fa-chalkboard-user"></i></div>
+                  <span>${item.teacher}</span>
+                </div>
+              </div>
+              ${item.notes ? `
+                <div class="notes-box">
+                  <i class="fas fa-circle-info"></i>
+                  <span>${item.notes}</span>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderMatrixView() {
+      const gridContainer = document.getElementById("matrixGridList");
+      const days = [2, 3, 4, 5, 6, 7, 8];
+      const today = getTodayCustomDay();
+      
+      gridContainer.innerHTML = days.map(d => {
+        const items = scheduleData[d] || [];
+        const isToday = d === today;
+        return `
+          <div class="grid-day-block" style="${isToday ? 'border-color:var(--primary);' : ''}">
+            <div class="grid-day-header" style="${isToday ? 'background:rgba(79, 70, 229, 0.08); color:var(--primary)' : ''}">
+              <span>${dayTitles[d]} ${isToday ? '<span class="today-tag" style="margin-left:6px;">Hôm nay</span>' : ''}</span>
+              <span style="font-size:12px; color: ${items.length > 0 ? 'var(--primary)' : 'var(--text-sub)'}">
+                ${items.length > 0 ? `${items.length} môn` : 'Nghỉ'}
+              </span>
+            </div>
+            ${items.length === 0 ? `
+              <div style="padding: 16px; text-align:center; font-size:12px; color:var(--text-sub); font-style:italic">
+                Không có lịch học
+              </div>
+            ` : items.map(item => `
+              <div class="grid-item">
+                <div class="grid-time-badge" style="background:${item.color}20; color:${item.color}">
+                  <div>${item.startTime}</div>
+                  <div style="font-size:10px; opacity:0.8">${item.endTime}</div>
+                </div>
+                <div>
+                  <div class="grid-info-title">${item.subject}</div>
+                  <div class="grid-info-sub">Phòng: <b>${item.room}</b> • ${item.teacher}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function getTodayCustomDay() {
+      const jsDay = new Date().getDay();
+      return jsDay === 0 ? 8 : jsDay + 1;
+    }
+
+    function selectDay(day) {
+      selectedDay = day;
+      const pills = document.querySelectorAll(".day-pill");
+      pills.forEach((p, idx) => {
+        p.classList.toggle("active", idx === (day - 2));
+      });
+      renderDayView(day);
+    }
+
+    function toggleViewMode() {
+      isMatrixView = !isMatrixView;
+      const dayView = document.getElementById("dayViewContainer");
+      const matrixView = document.getElementById("matrixGridView");
+      const daySelector = document.getElementById("daySelectorContainer");
+      const viewIcon = document.getElementById("viewIcon");
+      const viewText = document.getElementById("viewModeText");
+
+      if (isMatrixView) {
+        dayView.classList.add("hidden");
+        matrixView.classList.add("active");
+        daySelector.style.display = "none";
+        viewIcon.className = "fas fa-list-ul";
+        viewText.innerText = "Đổi Xem Ngày";
+        renderMatrixView();
+      } else {
+        dayView.classList.remove("hidden");
+        matrixView.classList.remove("active");
+        daySelector.style.display = "block";
+        viewIcon.className = "fas fa-table-cells";
+        viewText.innerText = "Đổi Bảng Lưới Tuần";
+        renderDayView(selectedDay);
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.body.getAttribute("data-theme") === "dark";
+      document.body.setAttribute("data-theme", isDark ? "light" : "dark");
+    }
+
+    function openSettings() {
+      document.getElementById("settingsModal").classList.add("active");
+    }
+
+    function closeSettings(e) {
+      document.getElementById("settingsModal").classList.remove("active");
+    }
+
+    function saveSettings() {
+      alert("✅ Đã lưu cấu hình Cloud API & đồng bộ dữ liệu thời khóa biểu!");
+      closeSettings();
+    }
+
+    function testNotificationWeb() {
+      closeSettings();
+      const banner = document.getElementById("iosBannerNotif");
+      banner.style.top = "54px";
+      
+      setTimeout(() => {
+        banner.style.top = "-100px";
+      }, 4500);
+    }
+
+    // Live clock update
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const mins = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById("liveTime").innerText = `${hours}:${mins}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Khởi chạy: Tự động chọn đúng Thứ của ngày hôm nay
+    selectDay(getTodayCustomDay());
+
+    // Tự động làm mới trạng thái tiết học mỗi 30 giây
+    setInterval(() => {
+      if (!isMatrixView) {
+        renderDayView(selectedDay);
+      }
+    }, 30000);
+  </script>
+</body>
+</html>

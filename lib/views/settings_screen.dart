@@ -184,7 +184,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     : Colors.black.withOpacity(0.06),
               ),
             ),
-            child: Column(
               children: [
                 SwitchListTile.adaptive(
                   activeColor: const Color(0xFF4F46E5),
@@ -200,6 +199,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onChanged: (val) {
                     provider.setNotificationsEnabled(val);
                   },
+                ),
+                const Divider(height: 1),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: const Color(0xFF4F46E5),
+                        side: const BorderSide(color: Color(0xFF4F46E5)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      icon: const Icon(CupertinoIcons.bell_fill, size: 18),
+                      label: const Text(
+                        '🔔 Gửi thử thông báo ngay',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () async {
+                        final success = await provider.triggerTestNotification();
+                        if (!context.mounted) return;
+                        if (success) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Color(0xFF10B981),
+                              content: Text('✅ Đã gửi thông báo test thành công lên máy!'),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.redAccent,
+                              content: Text('❌ Vui lòng cho phép quyền thông báo trong Cài đặt iPhone.'),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
                 ),
               ],
             ),

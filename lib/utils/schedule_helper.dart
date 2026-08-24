@@ -68,6 +68,13 @@ class ScheduleHelper {
   }
 
   static ScheduleStatus getScheduleStatus(ScheduleItem item, DateTime now) {
+    final currentCustomDay = getFlutterWeekdayToCustomDay(now.weekday);
+    if (item.dayOfWeek < currentCustomDay) {
+      return ScheduleStatus.finished;
+    } else if (item.dayOfWeek > currentCustomDay) {
+      return ScheduleStatus.upcoming;
+    }
+
     final start = getDateTimeForSchedule(item, now.year, now.month, now.day, isStart: true);
     final end = getDateTimeForSchedule(item, now.year, now.month, now.day, isStart: false);
 

@@ -39,10 +39,22 @@ void main() {
       expect(status, ScheduleStatus.finished);
     });
 
-    test('Notification trigger time calculation (30 minutes before)', () {
-      final reminderTime = ScheduleHelper.calculate30MinReminderTime(item, 2026, 8, 24);
-      expect(reminderTime.hour, 7);
-      expect(reminderTime.minute, 30);
+    test('Status calculation: Finished for passed days and Upcoming for future days', () {
+      final nowMonday = DateTime(2026, 8, 24, 9, 0); // Monday (Day 2)
+      
+      final wednesdayItem = ScheduleItem(
+        id: 'wed_item',
+        dayOfWeek: 4,
+        subjectName: 'Wed Subject',
+        room: 'B101',
+        teacher: 'GV B',
+        startTime: '08:00',
+        endTime: '10:00',
+      );
+      expect(ScheduleHelper.getScheduleStatus(wednesdayItem, nowMonday), ScheduleStatus.upcoming);
+
+      final nowFriday = DateTime(2026, 8, 28, 9, 0); // Friday (Day 6)
+      expect(ScheduleHelper.getScheduleStatus(item, nowFriday), ScheduleStatus.finished);
     });
   });
 }

@@ -103,6 +103,46 @@ class NotificationService {
     }
   }
 
+  /// Gửi ngay một thông báo thử nghiệm để người dùng kiểm tra trên thiết bị
+  Future<bool> sendInstantNotification({
+    String title = '🔔 Thông báo Thời Khóa Biểu (Test)',
+    String body = 'Hệ thống thông báo thời khóa biểu hoạt động hoàn hảo!',
+  }) async {
+    try {
+      final granted = await requestPermissions();
+      if (!granted) return false;
+
+      const NotificationDetails platformDetails = NotificationDetails(
+        android: AndroidNotificationDetails(
+          'timetable_instant_channel',
+          'Thông báo trực tiếp',
+          channelDescription: 'Kênh gửi thông báo thử nghiệm ngay lập tức',
+          importance: Importance.max,
+          priority: Priority.high,
+        ),
+        iOS: DarwinNotificationDetails(
+          sound: 'default',
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+        ),
+      );
+
+      await _notificationsPlugin.show(
+        999,
+        title,
+        body,
+        platformDetails,
+      );
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Lỗi gửi thông báo trực tiếp: $e');
+      }
+      return false;
+    }
+  }
+
   Future<void> _scheduleWeeklyNotification({
     required int id,
     required String title,

@@ -121,4 +121,11 @@ class ScheduleProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  Future<bool> triggerTestNotification() async {
+    return await _notificationService.sendInstantNotification(
+      title: '🔔 [Test] Thông báo Thời Khóa Biểu',
+      body: 'Hệ thống nhắc giờ học và vào lớp đang hoạt động chính xác!',
+    );
+  }
 }

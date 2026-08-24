@@ -19,36 +19,90 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: isDark ? const Color(0xFF0F172A) : Colors.white,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        title: Row(
           children: [
-            Text(
-              timetable?.semester ?? 'Thời Khóa Biểu',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                color: isDark ? Colors.white : const Color(0xFF0F172A),
+            // Logo ứng dụng
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF4F46E5).withOpacity(0.2),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  'assets/logo.png',
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Color(0xFF4F46E5), Color(0xFF8B5CF6)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'CN',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
-            Row(
-              children: [
-                Container(
-                  width: 7,
-                  height: 7,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFF10B981),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    timetable?.semester ?? 'Thời Khóa Biểu',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 16,
+                      color: isDark ? Colors.white : const Color(0xFF0F172A),
+                      letterSpacing: -0.2,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  timetable?.studentName ?? 'Đang tải...',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                  Row(
+                    children: [
+                      Container(
+                        width: 6,
+                        height: 6,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xFF10B981),
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Flexible(
+                        child: Text(
+                          timetable?.studentName ?? 'Đang tải...',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: isDark ? Colors.grey[400] : Colors.grey[600],
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -58,11 +112,19 @@ class HomeScreen extends StatelessWidget {
             tooltip: provider.viewMode == ViewMode.dayView
                 ? 'Xem bảng lưới toàn tuần'
                 : 'Xem từng ngày',
-            icon: Icon(
-              provider.viewMode == ViewMode.dayView
-                  ? CupertinoIcons.square_grid_2x2
-                  : CupertinoIcons.list_bullet,
-              color: const Color(0xFF4F46E5),
+            icon: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                provider.viewMode == ViewMode.dayView
+                    ? CupertinoIcons.square_grid_2x2_fill
+                    : CupertinoIcons.list_bullet,
+                size: 20,
+                color: const Color(0xFF4F46E5),
+              ),
             ),
             onPressed: () => provider.toggleViewMode(),
           ),
@@ -70,9 +132,17 @@ class HomeScreen extends StatelessWidget {
           // Nút Cài đặt nguồn Cloud & Thông báo
           IconButton(
             tooltip: 'Cài đặt Cloud & Thông báo',
-            icon: Icon(
-              CupertinoIcons.gear_alt,
-              color: isDark ? Colors.grey[300] : Colors.grey[700],
+            icon: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                CupertinoIcons.gear_alt_fill,
+                size: 20,
+                color: isDark ? Colors.grey[300] : Colors.grey[700],
+              ),
             ),
             onPressed: () {
               Navigator.of(context).push(
@@ -82,7 +152,7 @@ class HomeScreen extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: 6),
         ],
       ),
       body: Stack(
@@ -128,6 +198,7 @@ class HomeScreen extends StatelessWidget {
               child: LinearProgressIndicator(
                 backgroundColor: Colors.transparent,
                 color: const Color(0xFF4F46E5),
+                minHeight: 2.5,
               ),
             ),
         ],

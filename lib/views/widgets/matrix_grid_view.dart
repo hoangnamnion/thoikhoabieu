@@ -11,6 +11,8 @@ class MatrixGridViewWidget extends StatelessWidget {
     final provider = context.watch<ScheduleProvider>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final timetable = provider.timetableData;
+    final now = DateTime.now();
+    final todayCustomDay = ScheduleHelper.getFlutterWeekdayToCustomDay(now.weekday);
 
     if (timetable == null || timetable.items.isEmpty) {
       return const Center(
@@ -27,27 +29,31 @@ class MatrixGridViewWidget extends StatelessWidget {
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
         ),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: days.map((dayNum) {
             final dayItems = timetable.getItemsForDay(dayNum);
             final dayName = ScheduleHelper.dayNames[dayNum] ?? '';
+            final isToday = dayNum == todayCustomDay;
 
             return Container(
               margin: const EdgeInsets.only(bottom: 16),
               decoration: BoxDecoration(
                 color: isDark ? const Color(0xFF1E293B) : Colors.white,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(18),
                 border: Border.all(
-                  color: isDark
-                      ? Colors.white.withOpacity(0.08)
-                      : Colors.black.withOpacity(0.06),
+                  color: isToday
+                      ? const Color(0xFF4F46E5).withOpacity(0.6)
+                      : (isDark ? Colors.white.withOpacity(0.08) : Colors.black.withOpacity(0.06)),
+                  width: isToday ? 1.8 : 1.0,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.03),
-                    blurRadius: 10,
+                    color: isToday
+                        ? const Color(0xFF4F46E5).withOpacity(0.12)
+                        : Colors.black.withOpacity(0.03),
+                    blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
                 ],
@@ -62,23 +68,48 @@ class MatrixGridViewWidget extends StatelessWidget {
                       vertical: 12,
                     ),
                     decoration: BoxDecoration(
-                      color: isDark
-                          ? const Color(0xFF0F172A)
-                          : const Color(0xFFF8FAFC),
+                      color: isToday
+                          ? const Color(0xFF4F46E5).withOpacity(0.1)
+                          : (isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC)),
                       borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16),
+                        topLeft: Radius.circular(18),
+                        topRight: Radius.circular(18),
                       ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          dayName,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              dayName,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 15,
+                                color: isToday
+                                    ? const Color(0xFF4F46E5)
+                                    : (isDark ? Colors.white : const Color(0xFF0F172A)),
+                              ),
+                            ),
+                            if (isToday) ...[
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF4F46E5),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: const Text(
+                                  'Hôm nay',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ],
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(
@@ -87,17 +118,17 @@ class MatrixGridViewWidget extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: dayItems.isNotEmpty
-                                ? const Color(0xFF4F46E5).withOpacity(0.12)
-                                : Colors.grey.withOpacity(0.12),
+                                ? const Color(0xFF4F46E5).withOpacity(0.14)
+                                : (isDark ? Colors.white.withOpacity(0.06) : Colors.grey.withOpacity(0.12)),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
                             dayItems.isNotEmpty
                                 ? '${dayItems.length} môn'
-                                : 'Trống',
+                                : 'Nghỉ',
                             style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
                               color: dayItems.isNotEmpty
                                   ? const Color(0xFF4F46E5)
                                   : (isDark ? Colors.grey[400] : Colors.grey[600]),
@@ -108,10 +139,10 @@ class MatrixGridViewWidget extends StatelessWidget {
                     ),
                   ),
 
-                  // Nội dung các môn học trong ngày
+                  // Danh sách các môn học
                   if (dayItems.isEmpty)
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 18),
                       child: Center(
                         child: Text(
                           'Không có lịch học',
@@ -132,7 +163,7 @@ class MatrixGridViewWidget extends StatelessWidget {
                         height: 1,
                         color: isDark
                             ? Colors.white.withOpacity(0.06)
-                            : Colors.grey.withOpacity(0.15),
+                            : Colors.black.withOpacity(0.05),
                       ),
                       itemBuilder: (context, index) {
                         final item = dayItems[index];
@@ -143,16 +174,16 @@ class MatrixGridViewWidget extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              // Khối thời gian
+                              // Badge khối thời gian
                               Container(
-                                width: 85,
+                                width: 88,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 6,
                                   vertical: 6,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: item.color.withOpacity(0.12),
-                                  borderRadius: BorderRadius.circular(8),
+                                  color: item.color.withOpacity(0.14),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Column(
                                   children: [
@@ -160,7 +191,7 @@ class MatrixGridViewWidget extends StatelessWidget {
                                       item.startTime,
                                       style: TextStyle(
                                         fontSize: 13,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.w800,
                                         color: item.color,
                                       ),
                                     ),
@@ -168,49 +199,36 @@ class MatrixGridViewWidget extends StatelessWidget {
                                       item.endTime,
                                       style: TextStyle(
                                         fontSize: 11,
-                                        color: item.color.withOpacity(0.8),
+                                        fontWeight: FontWeight.w600,
+                                        color: item.color.withOpacity(0.85),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              const SizedBox(width: 14),
+                              const SizedBox(width: 12),
 
-                              // Thông tin môn & phòng
+                              // Thông tin môn & phòng học
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       item.subjectName,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w600,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w700,
                                         fontSize: 14,
+                                        color: isDark ? Colors.white : const Color(0xFF0F172A),
                                       ),
                                     ),
-                                    const SizedBox(height: 4),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'Phòng: ${item.room}',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: isDark
-                                                ? Colors.grey[400]
-                                                : Colors.grey[600],
-                                          ),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          '•  ${item.teacher}',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: isDark
-                                                ? Colors.grey[400]
-                                                : Colors.grey[600],
-                                          ),
-                                        ),
-                                      ],
+                                    const SizedBox(height: 3),
+                                    Text(
+                                      'Phòng: ${item.room}  •  ${item.teacher}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: isDark ? Colors.grey[400] : Colors.grey[600],
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ],
                                 ),
