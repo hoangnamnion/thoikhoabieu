@@ -1,84 +1,62 @@
 {
   "semester": "Học kỳ 1 (2026 - 2027) - UTT",
   "student_name": "Cao Văn Nam (75DCKN24)",
-  "updated_at": "2026-08-24T08:00:00Z",
+  "updated_at": "2026-09-07T09:17:00Z",
   "schedule": [
     {
-      "id": "utt_mon_01",
+      "id": "ADBCA1CC666E433DAA004A8C62383F39",
       "day_of_week": 2,
       "subject_name": "Kiến trúc cảnh quan",
       "room": "A2.102",
       "teacher": "Nguyễn Quang Hòa",
       "start_time": "12:45",
-      "end_time": "14:30",
-      "color": "#5A7ADB",
-      "notes": "Tiết 7-8 | Lớp: Kiến trúc cảnh quan-1-1-26(N05)/75DCKN24"
+      "end_time": "15:25",
+      "color": "#5a7adb",
+      "notes": "Tiết 7-9 | Lớp: Kiến trúc cảnh quan-1-1-26(N05)/75DCKN24"
     },
     {
-      "id": "utt_mon_02",
+      "id": "B0AF79E1891A4F54B8FD1BD832EE57A3",
       "day_of_week": 2,
       "subject_name": "Kết cấu xây dựng cơ bản",
       "room": "A2.102",
       "teacher": "Vũ Thọ Hưng",
-      "start_time": "14:35",
+      "start_time": "15:30",
       "end_time": "18:10",
-      "color": "#D49F3A",
-      "notes": "Tiết 9-12 | Lớp: Kết cấu xây dựng cơ bản-1-1-26(N08)/75DCKN24"
+      "color": "#d49f3a",
+      "notes": "Tiết 10-12 | Lớp: Kết cấu xây dựng cơ bản-1-1-26(N08)/75DCKN24"
     },
     {
-      "id": "utt_tue_01",
+      "id": "921BBC8077C5432780639A484D64D3B8",
       "day_of_week": 3,
       "subject_name": "Kết cấu xây dựng cơ bản",
       "room": "A2.102",
       "teacher": "Vũ Thọ Hưng",
       "start_time": "13:40",
       "end_time": "18:10",
-      "color": "#D49F3A",
+      "color": "#d49f3a",
       "notes": "Tiết 8-12 | Lớp: Kết cấu xây dựng cơ bản-1-1-26(N08)/75DCKN24"
     },
     {
-      "id": "utt_wed_01",
+      "id": "125647F9CD8A4ABDAA21437E69A8285E",
       "day_of_week": 4,
       "subject_name": "Nguyên lý quy hoạch",
       "room": "A2.101",
       "teacher": "Nguyễn Minh Đức",
-      "start_time": "06:45",
-      "end_time": "10:20",
-      "color": "#223771",
-      "notes": "Tiết 1-4 | Lớp: Nguyên lý quy hoạch-1-1-26(N08)/75DCKN24"
-    },
-    {
-      "id": "utt_wed_02",
-      "day_of_week": 4,
-      "subject_name": "Kiến trúc cảnh quan",
-      "room": "A2.101",
-      "teacher": "Nguyễn Quang Hòa",
-      "start_time": "10:25",
+      "start_time": "09:30",
       "end_time": "12:10",
-      "color": "#5A7ADB",
-      "notes": "Tiết 5-6 | Lớp: Kiến trúc cảnh quan-1-1-26(N05)/75DCKN24"
+      "color": "#223771",
+      "notes": "Tiết 4-6 | Lớp: Nguyên lý quy hoạch-1-1-26(N08)/75DCKN24"
     },
     {
-      "id": "utt_thu_01",
+      "id": "0C9EF4340BC94625AEB55DD0896AECA4",
       "day_of_week": 5,
       "subject_name": "Tiếng Anh chuyên ngành",
       "room": "Trực tuyến",
       "teacher": "Nguyễn Thị Thanh Hương",
-      "start_time": "08:35",
+      "start_time": "06:45",
       "end_time": "12:10",
-      "color": "#EC4C00",
-      "notes": "Tiết 3-6 | Lớp: Tiếng Anh chuyên ngành-1-1-26(N26)/75DCKN23_75DCKN24"
-    },
-    {
-      "id": "utt_sat_01",
-      "day_of_week": 7,
-      "subject_name": "Tiếng Anh chuyên ngành",
-      "room": "Trực tuyến",
-      "teacher": "Nguyễn Thị Thanh Hương",
-      "start_time": "08:35",
-      "end_time": "12:10",
-      "color": "#EC4C00",
-      "notes": "Tiết 3-6 | Lớp: Tiếng Anh chuyên ngành-1-1-26(N26)/75DCKN23_75DCKN24"
+      "color": "#ec4c00",
+      "notes": "Tiết 1-6 | Lớp: Tiếng Anh chuyên ngành-1-1-26(N26)/75DCKN23_75DCKN24"
     }
   ]
 }
